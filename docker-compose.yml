@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  database:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: 'books'
+      POSTGRES_PASSWORD: 'secret'
+    ports:
+      - '5432:5432'
+  books-api:
+    image: books-api:latest
+    environment:
+      RAILS_ENV: 'production'
+      RACK_ENV: 'production'
+      BOOKS_API_DATABASE_URL: 'postgresql://database:5432/books_api_test'
+      BOOKS_API_DATABASE_USER: 'books'
+      BOOKS_API_DATABASE_PASSWORD: 'secret'
+      RAILS_LOG_TO_STDOUT: 'true'
+    ports:
+      - '9292:9292'
